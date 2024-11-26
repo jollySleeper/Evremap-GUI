@@ -1,11 +1,16 @@
 // RemapSection.tsx
 import React, { useState, useEffect } from 'react';
-import Select from 'react-select';
+import Select, { MultiValue } from 'react-select';
 import { invoke } from '@tauri-apps/api/tauri';
 
 interface RemapEntry {
   input: string[];
   output: string[];
+}
+
+interface Option {
+    value: string;
+    label: string;
 }
 
 interface RemapSectionProps {
@@ -21,7 +26,7 @@ const RemapSection: React.FC<RemapSectionProps> = (props) => {
   useEffect(() => {
     const fetchKeys = async () => {
       try {
-        const keysResponse = await invoke('list_keys');
+        const keysResponse = await invoke('list_keys') as string;
         const keysArray = keysResponse.split('\n').filter(Boolean);
         setKeys(keysArray);
       } catch (error) {
@@ -109,7 +114,10 @@ const RemapSection: React.FC<RemapSectionProps> = (props) => {
                 isMulti
                 options={keys.map((key) => ({ label: key, value: key }))}
                 value={entry.input && entry.input.map((value) => ({ label: value, value }))}
-                onChange={(selectedOptions) => handleInputChange(index, 'input', selectedOptions)}
+                onChange={(selectedMultiValueOptions: MultiValue<Option>) => {
+                    const selectedOptions = selectedMultiValueOptions.map(option => option.value);
+                    handleInputChange(index, 'input', selectedOptions)
+                }}
                 styles={customStyles}
               />
             </div>
@@ -118,7 +126,10 @@ const RemapSection: React.FC<RemapSectionProps> = (props) => {
                 isMulti
                 options={keys.map((key) => ({ label: key, value: key }))}
                 value={entry.output && entry.output.map((value) => ({ label: value, value }))}
-                onChange={(selectedOptions) => handleInputChange(index, 'output', selectedOptions)}
+                onChange={(selectedMultiValueOptions: MultiValue<Option>) => {
+                    const selectedOptions = selectedMultiValueOptions.map(option => option.value);
+                    handleInputChange(index, 'output', selectedOptions)
+                }}
                 styles={customStyles}
               />
             </div>
