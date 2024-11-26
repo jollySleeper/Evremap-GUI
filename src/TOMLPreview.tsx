@@ -38,7 +38,7 @@ const TOMLPreview: React.FC<TOMLPreviewProps> = ({
   const [saved, setSaved] = useState(false);
   const [fileName, setFileName] = useState("");
   const [filePath, setFilePath] = useState("");
-  const [processingEntries, setProcessingEntries] = useState(false);
+  // const [processingEntries, setProcessingEntries] = useState(false);
 
   const generateTOMLString = (entries: DualRoleEntry[]) => {
     const tomlSections = entries.map((entry) => {
@@ -133,7 +133,7 @@ const TOMLPreview: React.FC<TOMLPreviewProps> = ({
         const filePath = result;
   
         try {
-          const parsedData = await invoke('read_toml_content', { filePath });
+          const parsedData = await invoke('read_toml_content', { filePath }) as string;
           const parsedObject = JSON.parse(parsedData);
   
           setDeviceName(parsedObject.device_name || null);

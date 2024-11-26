@@ -13,12 +13,13 @@ const DeviceNamePhys: React.FC<DeviceNamePhysProps> = ({ setDeviceName, setSelec
   const [options, setOptions] = useState<string[]>([]);
   const [showSecondDropdown, setShowSecondDropdown] = useState(false);
   const [secondDropdownOptions, setSecondDropdownOptions] = useState<string[]>([]);
+  // @ts-ignore
   const [selectedPhys, setSelectedPhysInternal] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const data = await invoke("get_device_names");
+        const data = await invoke("get_device_names") as string;
         const optionsArray = data.split('\n').filter(Boolean);
         setOptions(optionsArray);
       } catch (error) {
@@ -42,7 +43,7 @@ const DeviceNamePhys: React.FC<DeviceNamePhysProps> = ({ setDeviceName, setSelec
   useEffect(() => {
     const fetchPhysData = async () => {
       try {
-        const data = await invoke("get_phys_names");
+        const data = await invoke("get_phys_names") as string;
         const optionsArray = data.split('\n').filter(Boolean);
         setSecondDropdownOptions(optionsArray);
       } catch (error) {
@@ -62,19 +63,19 @@ const DeviceNamePhys: React.FC<DeviceNamePhysProps> = ({ setDeviceName, setSelec
   };
   
   const customStyles2 = {
-    control: (provided) => ({
+    control: (provided: any) => ({
       ...provided,
       color: 'black',
       width: 350, // Set the width as needed
       margin: '0 auto',
       position: 'relative',
     }),
-    option: (provided) => ({
+    option: (provided: any) => ({
       ...provided,
       color: 'black',
       width: 350, // Set the width as needed
     }),
-    menu: (provided: any, state: any) => ({
+    menu: (provided: any) => ({
       ...provided,
       width: 350, // Set the width of the expanded menu as needed
       position: 'absolute',
@@ -98,7 +99,7 @@ const DeviceNamePhys: React.FC<DeviceNamePhysProps> = ({ setDeviceName, setSelec
           id="deviceSelect"
           options={options.map(option => ({ label: option, value: option }))}
           styles={customStyles2}
-          onChange={(selectedOption) => setDeviceName(selectedOption?.value)}
+          onChange={(selectedOption) => setDeviceName(selectedOption?.value || '')}
         />
       )}
 
