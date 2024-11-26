@@ -18,7 +18,8 @@ interface TOMLPreviewProps {
   remapEntries: RemapEntry[];
   deviceName: string | null;
   selectedPhys: string | null;
-  setDualRoleEntries: (entries: DualRoleEntry[]) => void;
+  // setDualRoleEntries: React.Dispatch<React.SetStateAction<DualRoleEntry[]>>;
+  setDualRoleEntries: (entries: React.Dispatch<React.SetStateAction<DualRoleEntry[]>>) => void;
   setRemapEntries: (entries: RemapEntry[]) => void;
   setDeviceName: (deviceName: string | null) => void;
   setSelectedPhys: (phys: string | null) => void;
