@@ -1,12 +1,17 @@
 // DualroleSection.tsx
 import React, { useState, useEffect } from 'react';
-import Select, { MultiValue, OptionTypeBase } from 'react-select';
+import Select, { MultiValue } from 'react-select';
 import { invoke } from '@tauri-apps/api/tauri';
 
 interface DualRoleEntry {
   input: string[];
   hold: string[];
   tap: string[];
+}
+
+interface Option {
+    value: string;
+    label: string;
 }
 
 interface DualroleSectionProps {
@@ -107,8 +112,8 @@ const DualroleSection: React.FC<DualroleSectionProps> = (props) => {
                 isMulti
                 options={keys.map((key) => ({ label: key, value: key }))}
                 value={entry.input && entry.input.map((value) => ({ label: value, value }))}
-                onChange={(selectedMultiValueOptions: MultiValue<OptionTypeBase>) => {
-                    const selectedOptions = selectedMultiValueOptions.map((option: OptionTypeBase) => option.value);
+                onChange={(selectedMultiValueOptions: MultiValue<Option>) => {
+                    const selectedOptions = selectedMultiValueOptions.map((option: Option) => option.value);
                     handleInputChange(index, 'input', selectedOptions);
                 }}
                 styles={customStyles}

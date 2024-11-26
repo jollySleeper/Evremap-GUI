@@ -1,11 +1,16 @@
 // RemapSection.tsx
 import React, { useState, useEffect } from 'react';
-import Select from 'react-select';
+import Select, { MultiValue } from 'react-select';
 import { invoke } from '@tauri-apps/api/tauri';
 
 interface RemapEntry {
   input: string[];
   output: string[];
+}
+
+interface Option {
+    value: string;
+    label: string;
 }
 
 interface RemapSectionProps {

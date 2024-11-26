@@ -35,7 +35,7 @@ const DeviceNamePhys: React.FC<DeviceNamePhysProps> = ({ setDeviceName, setSelec
     if (!e.target.checked) {
       // Reset selectedPhys when checkbox is unchecked
       setSelectedPhysInternal(null);
-      setSelectedPhys(null); // Ensure that the parent component's state is also updated
+      setSelectedPhys(''); // Ensure that the parent component's state is also updated
     }
   };
   
