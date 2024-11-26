@@ -4,7 +4,7 @@ import Select, { MultiValue } from 'react-select';
 import { invoke } from '@tauri-apps/api/tauri';
 
 interface DualRoleEntry {
-  input: string | string[];
+  input: string[];
   hold: string[];
   tap: string[];
 }
